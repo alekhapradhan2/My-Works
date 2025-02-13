@@ -4,7 +4,7 @@ import java.util.Scanner;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-public class practice {
+public class ApiTest {
     // Base URL for the API
     private static final String BASE_URL = "https://ymcaorg.affnetz.com/api";
     private static final String TOKEN_API = "/get-access-token";
