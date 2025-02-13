@@ -38,8 +38,8 @@ public class TokenExporter {
 		driver.findElement(By.linkText("Mandi Arrival")).click();
 		Select ppcid=new Select(driver.findElement(By.id("ppcId")));
 		ppcid.selectByVisibleText("GOPINATHPOR SCS(S1110717)");
-        String farmerDetail = "C:\\Users\\Dell\\Documents\\Farmer Details.xlsx"; // Change to your file path
-        String tokenfile="C:\\Users\\Dell\\Documents\\Token Details.xlsx";
+        String farmerDetail = "src/Datas/Gopinathpur/Farmer Details.xlsx"; // Change to your file path
+        String tokenfile="src/Datas/Gopinathpur/Token Details.xlsx";
         FileInputStream fis = new FileInputStream(new File(farmerDetail));
         Workbook workbook = new XSSFWorkbook(fis);
         Sheet sheet=workbook.getSheet("Sheet1");
@@ -103,9 +103,8 @@ public class TokenExporter {
 						FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 						workbook1.write(fos);
 						System.out.println("|------------------------------------------------------------------|");
-						System.out.println("|        "+ farmerName+"  "+farmerCode+"  "+tokenQtyValue +"       |");
-						System.out.println("|                        Updated Successfully                      |");
-						System.out.println("|------------------------------------------------------------------|");
+						System.out.println("             "+farmerName+"  "+farmerCode+"  "+tokenQtyValue+"     " );
+						System.out.println("|             Updated Successfully                                 |");
 						
 					}
 				}else {
@@ -120,9 +119,8 @@ public class TokenExporter {
 					FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 					workbook1.write(fos);
 					System.out.println("|------------------------------------------------------------------|");
-					System.out.println("|                 "+ farmerName+"  "+farmerCode +"                 |");
-					System.out.println("|                        Token Not Generated                       |");
-					System.out.println("|------------------------------------------------------------------|");
+					System.out.println("                  "+farmerName+"  "+farmerCode+"                   " );
+					System.out.println("|                  Token Not Generated                             |");
 					rowcoutn++;
 				}
 				driver.findElement(By.id("farmerCodeId")).clear();
@@ -132,6 +130,7 @@ public class TokenExporter {
 
 			
 		}
+		System.out.println("|------------------------------------------------------------------|");
 		System.out.println("Total Token Qty: "+tokenTokenQty);
 		System.out.println("Total Token Qty: "+tokenRemainQty);
 		System.out.println("Total Farmer Got the toekn: "+totalFarmrget);
@@ -147,15 +146,15 @@ public class TokenExporter {
 		rowcoutn++;
 		row1=sheet1.getRow(rowcoutn);
 		Cell get=row1.getCell(1);
-		get.setCellValue("Total Farmer Got the toekn: "+totalFarmrget);
+		get.setCellValue("Total Farmer Got the token: "+totalFarmrget);
 		Cell not=row1.getCell(2);
-		not.setCellValue("Total Farmer Did not Get the toekn: "+totalFarmerNot);
+		not.setCellValue("Total Farmer Did not Get the token: "+totalFarmerNot);
 		Cell tt=row1.getCell(3);
 		tt.setCellValue("Total token Generated: "+totalToken);
 		FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 		workbook1.write(fos);
 		driver.close();
-		System.out.println("---------------------Token Data Exported----------------------------");
+		System.out.println("|--------------------Token Data Exported----------------------------|");
 		
 		
 
