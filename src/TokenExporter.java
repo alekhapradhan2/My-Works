@@ -102,9 +102,10 @@ public class TokenExporter {
 						rowcoutn++;
 						FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 						workbook1.write(fos);
-						System.out.println(farmerName+"  "+farmerCode+"  "+tokenQtyValue);
-						System.out.println("Updated Successfully");
-						System.out.println("-------------------------------------------------");
+						System.out.println("|------------------------------------------------------------------|");
+						System.out.println("|        "+ farmerName+"  "+farmerCode+"  "+tokenQtyValue +"       |");
+						System.out.println("|                        Updated Successfully                      |");
+						System.out.println("|------------------------------------------------------------------|");
 						
 					}
 				}else {
@@ -118,9 +119,10 @@ public class TokenExporter {
 					tn.setCellValue("Token Not Generated");
 					FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 					workbook1.write(fos);
-					System.out.println(farmerName+"  "+farmerCode);
-					System.out.println("Token Not Generated");
-					System.out.println("-------------------------------------------------");
+					System.out.println("|------------------------------------------------------------------|");
+					System.out.println("|                 "+ farmerName+"  "+farmerCode +"                 |");
+					System.out.println("|                        Token Not Generated                       |");
+					System.out.println("|------------------------------------------------------------------|");
 					rowcoutn++;
 				}
 				driver.findElement(By.id("farmerCodeId")).clear();
@@ -153,7 +155,7 @@ public class TokenExporter {
 		FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 		workbook1.write(fos);
 		driver.close();
-		System.out.println("--------------------Token Data Exported--------------------");
+		System.out.println("---------------------Token Data Exported----------------------------");
 		
 		
 
