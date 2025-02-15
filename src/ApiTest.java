@@ -17,7 +17,7 @@ public class ApiTest {
         if (accessToken == null || accessToken.isEmpty()) {
             System.err.println("Failed to retrieve access token. Exiting.");
             return;
-        }
+        } 
         Scanner sc=new Scanner(System.in);
         System.out.print("Give the file: ");
         String filePath=sc.next();
