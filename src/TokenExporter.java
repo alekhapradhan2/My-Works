@@ -38,8 +38,8 @@ public class TokenExporter {
 		driver.findElement(By.linkText("Mandi Arrival")).click();
 		Select ppcid=new Select(driver.findElement(By.id("ppcId")));
 		ppcid.selectByVisibleText("GOPINATHPOR SCS(S1110717)");
-        String farmerDetail = "src/Datas/Gopinathpur/Farmer Details.xlsx"; // Change to your file path
-        String tokenfile="src/Datas/Gopinathpur/Token Details.xlsx";
+        String farmerDetail = "src/Datas/Gopinathpur/Farmer_Details.xlsx"; // Change to your file path
+        String tokenfile="src/Datas/Gopinathpur/Token_Details.xlsx";
         FileInputStream fis = new FileInputStream(new File(farmerDetail));
         Workbook workbook = new XSSFWorkbook(fis);
         Sheet sheet=workbook.getSheet("Sheet1");
@@ -91,8 +91,15 @@ public class TokenExporter {
 						fc.setCellValue(farmercode);
 						Cell fn=row1.getCell(1);
 						fn.setCellValue(farmername);
-						Cell tn=row1.getCell(2);
-						tn.setCellValue(tokenNo);
+						if(tokenQtyValue!=RemtokenQtyValue)
+						{
+							Cell tn=row1.getCell(2);
+							tn.setCellValue(tokenNo+" Purchased-qty "+(tokenQtyValue-RemtokenQtyValue));
+						}else {
+							Cell tn=row1.getCell(2);
+							tn.setCellValue(tokenNo);
+						}
+
 						Cell td=row1.getCell(3);
 						td.setCellValue(tokenDate);
 						Cell tq=row1.getCell(4);
@@ -145,12 +152,8 @@ public class TokenExporter {
 		fn.setCellValue(tokenRemainQty);
 		rowcoutn++;
 		row1=sheet1.getRow(rowcoutn);
-		Cell get=row1.getCell(1);
-		get.setCellValue("Total Farmer Got the token: "+totalFarmrget);
-		Cell not=row1.getCell(2);
-		not.setCellValue("Total Farmer Did not Get the token: "+totalFarmerNot);
-		Cell tt=row1.getCell(3);
-		tt.setCellValue("Total token Generated: "+totalToken);
+		Cell tt=row1.getCell(1);
+		tt.setCellValue("Total Active Token: "+totalToken);
 		FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 		workbook1.write(fos);
 		driver.close();
