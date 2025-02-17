@@ -110,8 +110,8 @@ public class TokenExporter {
 						FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 						workbook1.write(fos);
 						System.out.println("|------------------------------------------------------------------|");
-						System.out.println("             "+farmerName+"  "+farmerCode+"  "+tokenQtyValue+"     " );
-						System.out.println("|             Updated Successfully                                 |");
+						System.out.println("|"+farmerName+"  "+farmerCode+"  "+tokenQtyValue+"     " );
+						System.out.println("|Updated Successfully                                 |");
 						
 					}
 				}else {
@@ -126,8 +126,8 @@ public class TokenExporter {
 					FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 					workbook1.write(fos);
 					System.out.println("|------------------------------------------------------------------|");
-					System.out.println("                  "+farmerName+"  "+farmerCode+"                   " );
-					System.out.println("|                  Token Not Generated                             |");
+					System.out.println("|"+farmerName+"  "+farmerCode+"                   " );
+					System.out.println("|Token Not Generated                             |");
 					rowcoutn++;
 				}
 				driver.findElement(By.id("farmerCodeId")).clear();
