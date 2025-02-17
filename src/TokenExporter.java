@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -23,23 +24,47 @@ public class TokenExporter {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		
+		String  farmerDetail="",tokenfile="",ppcCode = "";
+		String userName="",password="",pacdID="";
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Please give the Society Id");
+		Thread.sleep(2000);
+		System.out.print("For Badapalanka Press B and for Gopinathpur press G ");
+		ppcCode=sc.next();
+		
+		switch (ppcCode.toUpperCase()) {
+		case "G":
+			userName="S1110717";
+			password="Kunjit@2024";
+			farmerDetail="src/Datas/Gopinathpur/Farmer_Details.xlsx";
+			tokenfile="src/Datas/Gopinathpur/Token_Details.xlsx";
+			break;
+		case "B":
+			userName="S1110703";
+			password="BIPRA@321";
+			farmerDetail="src/Datas/Badapalanka/Farmer_Details.xlsx";
+			tokenfile="src/Datas/Badapalanka/Token_Details.xlsx";
+			break;
+
+		default:
+			break;
+		}
+		
 		System.setProperty("webdriver", "chromedriver.exe");
 		WebDriver driver=new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);	 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get("https://ppas.pdsodisha.gov.in");
-		driver.findElement(By.id("txtuserID")).sendKeys("S1110717");
-		driver.findElement(By.id("txtPassword")).sendKeys("Kunjit@2024");
+		driver.findElement(By.id("txtuserID")).sendKeys(userName);
+		driver.findElement(By.id("txtPassword")).sendKeys(password);
 		Thread.sleep(7000);
 		driver.findElement(By.id("LoginButton")).click();
 		driver.findElement(By.className("icon-menu")).click();
 		driver.findElement(By.xpath("//span[text()='Purchase']")).click();
 		driver.findElement(By.linkText("Mandi Arrival")).click();
 		Select ppcid=new Select(driver.findElement(By.id("ppcId")));
-		ppcid.selectByVisibleText("GOPINATHPOR SCS(S1110717)");
-        String farmerDetail = "src/Datas/Gopinathpur/Farmer_Details.xlsx"; // Change to your file path
-        String tokenfile="src/Datas/Gopinathpur/Token_Details.xlsx";
+		ppcid.selectByIndex(1);
         FileInputStream fis = new FileInputStream(new File(farmerDetail));
         Workbook workbook = new XSSFWorkbook(fis);
         Sheet sheet=workbook.getSheet("Sheet1");
@@ -52,7 +77,7 @@ public class TokenExporter {
         int totalFarmrget=0;
         int totalFarmerNot=0;
         int totalToken=0;
-		for(int i=1;i<=200;i++)
+		for(int i=1;i<=300;i++)
 		{
 			try {
 				Row row=sheet.getRow(i);
@@ -111,7 +136,7 @@ public class TokenExporter {
 						workbook1.write(fos);
 						System.out.println("|------------------------------------------------------------------|");
 						System.out.println("|"+farmerName+"  "+farmerCode+"  "+tokenQtyValue+"     " );
-						System.out.println("|Updated Successfully                                 |");
+						System.out.println("|Updated Successfully                                              |");
 						
 					}
 				}else {
@@ -127,7 +152,7 @@ public class TokenExporter {
 					workbook1.write(fos);
 					System.out.println("|------------------------------------------------------------------|");
 					System.out.println("|"+farmerName+"  "+farmerCode+"                   " );
-					System.out.println("|Token Not Generated                             |");
+					System.out.println("|Token Not Generated                                               |");
 					rowcoutn++;
 				}
 				driver.findElement(By.id("farmerCodeId")).clear();
@@ -139,7 +164,7 @@ public class TokenExporter {
 		}
 		System.out.println("|------------------------------------------------------------------|");
 		System.out.println("Total Token Qty: "+tokenTokenQty);
-		System.out.println("Total Token Qty: "+tokenRemainQty);
+		System.out.println("Total Remaining Token Qty: "+tokenRemainQty);
 		System.out.println("Total Farmer Got the toekn: "+totalFarmrget);
 		System.out.println("Total Farmer Did not Get the toekn: "+totalFarmerNot);
 		System.out.println("Total token Generated: "+totalToken);
@@ -152,7 +177,7 @@ public class TokenExporter {
 		fn.setCellValue(tokenRemainQty);
 		rowcoutn++;
 		row1=sheet1.getRow(rowcoutn);
-		Cell tt=row1.getCell(1);
+		Cell tt=row1.getCell(2);
 		tt.setCellValue("Total Active Token: "+totalToken);
 		FileOutputStream fos = new FileOutputStream(new File(tokenfile));
 		workbook1.write(fos);
